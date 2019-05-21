@@ -23,7 +23,7 @@ func main() {
 		port = "8080"
 	}
 	log.Println("Serving http://localhost:" + port)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
