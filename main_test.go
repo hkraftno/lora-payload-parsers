@@ -86,3 +86,20 @@ func TestParserExampleHex1(t *testing.T) {
 		)
 	}
 }
+
+func TestParserExampleHex2(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/ope_lab_xxns/05fb0315030c1f", nil)
+	w := httptest.NewRecorder()
+
+	rootHandler(w, r)
+	result := w.Result()
+	body, _ := ioutil.ReadAll(result.Body)
+	var expected = `{"id":5,"battery_level":99,"open_state":false,"internal_data":"15030c1f"}`
+	if expected != string(body) {
+		t.Errorf(
+			"Expected JSON to be\n%s\nbut was\n%s",
+			expected,
+			body,
+		)
+	}
+}

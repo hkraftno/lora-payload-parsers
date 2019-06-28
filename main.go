@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/hkraft/hkraft-iot/lora-payload-parsers/ope_lab_xxns"
 	"github.com/hkraft/hkraft-iot/lora-payload-parsers/pir_lab_xxns"
 	"github.com/hkraft/hkraft-iot/lora-payload-parsers/pul_lab_xxns"
 	"github.com/hkraft/hkraft-iot/lora-payload-parsers/tem_lab_xxns"
@@ -51,6 +52,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		parser = thy_lab_xxns.Parse
 	case "tor_lab_xxns":
 		parser = tor_lab_xxns.Parse
+	case "ope_lab_xxns":
+		parser = ope_lab_xxns.Parse
 	default:
 		http.Error(w, "Unknown parser "+parserName, 404)
 		return
