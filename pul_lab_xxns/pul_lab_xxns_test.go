@@ -32,6 +32,26 @@ func TestBattery(t *testing.T) {
 		)
 	}
 }
+func TestBatteryWithWirecut(t *testing.T) {
+	expected := math.Round(252.0 / 254.0 * 100) // 99%
+	var data PulLabxxnsStruct
+	data.parse([]byte{0x07, 0x80, 0xfc, 0x00, 0x00, 0x00, 0x00})
+	actual := data.BatteryLevel
+	if uint8(expected) != actual {
+		t.Errorf(
+			"Expected BatteryLevel to be %d but was %d",
+			uint8(expected),
+			actual,
+		)
+	}
+	if uint8(expected) != actual {
+		t.Errorf(
+			"Expected Wire cut status to be %v but was %v",
+			true,
+			data.WireCutStatus,
+		)
+	}
+}
 
 func TestBatteryRounding(t *testing.T) {
 	expected := math.Round(253.0 / 254.0 * 100) // 100%

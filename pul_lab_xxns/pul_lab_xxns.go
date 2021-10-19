@@ -30,13 +30,15 @@ type PulLabxxnsStruct struct {
 func (t *PulLabxxnsStruct) parse(payload []byte) {
 	length := len(payload)
 	t.ID = uint8(payload[0])
+	batteryLocation := 1
 
 	if t.ID == 7 {
 		wirecut := payload[1]&0x80 > 0
 		t.WireCutStatus = &wirecut
+		batteryLocation = 2
 	}
 	// battery level expressed in 1/254 %
-	t.BatteryLevel = uint8(math.Round(float64(payload[1]) / 254.0 * 100))
+	t.BatteryLevel = uint8(math.Round(float64(payload[batteryLocation]) / 254.0 * 100))
 	for _, b := range payload[2 : length-4] {
 		t.InternalData += fmt.Sprintf("%02x", b)
 	}
