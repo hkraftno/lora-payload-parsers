@@ -1,3 +1,3 @@
-module github.com/hkraft/hkraft-iot/lora-payload-parsers
+module github.com/hkraftno/hkraft-iot/lora-payload-parsers
 
 go 1.12
