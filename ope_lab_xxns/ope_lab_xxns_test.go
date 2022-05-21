@@ -8,7 +8,7 @@ import (
 func TestID(t *testing.T) {
 	var expected uint8 = 5
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x05, 0x00, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x05, 0x00, 0x00, 0x00, 0x00, 0x00})
 	actual := data.ID
 	if expected != actual {
 		t.Errorf(
@@ -22,7 +22,7 @@ func TestID(t *testing.T) {
 func TestBattery(t *testing.T) {
 	expected := math.Round(252.0 / 254.0 * 100) // 99%
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x00, 0xfc, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x00, 0xfc, 0x00, 0x00, 0x00, 0x00})
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -36,7 +36,7 @@ func TestBattery(t *testing.T) {
 func TestBatteryRounding(t *testing.T) {
 	expected := math.Round(253.0 / 254.0 * 100) // 100%
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x00, 0xfd, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x00, 0xfd, 0x00, 0x00, 0x00, 0x00})
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -50,7 +50,7 @@ func TestBatteryRounding(t *testing.T) {
 func TestInternalData(t *testing.T) {
 	expected := "01020304050607"
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07})
+	data.Load([]byte{0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07})
 	actual := data.InternalData
 	if actual != expected {
 		t.Errorf(
@@ -64,7 +64,7 @@ func TestInternalData(t *testing.T) {
 func TestOpenStateTrue(t *testing.T) {
 	var expected bool = true
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x83})
+	data.Load([]byte{0x00, 0x00, 0x83})
 	actual := data.OpenState
 	if expected != actual {
 		t.Errorf(
@@ -78,7 +78,7 @@ func TestOpenStateTrue(t *testing.T) {
 func TestOpenStateFalse(t *testing.T) {
 	var expected bool = false
 	var data OpeLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x03})
+	data.Load([]byte{0x00, 0x00, 0x03})
 	actual := data.OpenState
 	if expected != actual {
 		t.Errorf(

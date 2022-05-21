@@ -8,12 +8,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/ope_lab_xxns"
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/pir_lab_xxns"
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/pul_lab_xxns"
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/tem_lab_xxns"
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/thy_lab_xxns"
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/tor_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/ope_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/pir_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/pul_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tem_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/thy_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tor_lab_xxns"
 )
 
 func main() {

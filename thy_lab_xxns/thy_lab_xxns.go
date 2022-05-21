@@ -9,10 +9,10 @@ import (
 // Parse is the cloud function for converting the payload hex to json
 func Parse(payload []byte) (jsonData []byte, err error) {
 	if payload[0] != 0x03 {
-		return nil, fmt.Errorf("This parser only supports the Uplink message DATALOG - FPort 3 (HEX starts with 03)")
+		return nil, fmt.Errorf("this parser only supports the Uplink message DATALOG - FPort 3 (HEX starts with 03)")
 	}
 	var data ThyLabxxnsStruct
-	data.parse(payload)
+	data.Load(payload)
 
 	return json.Marshal(data)
 }
@@ -25,7 +25,7 @@ type ThyLabxxnsStruct struct {
 	Humidity     uint8   `json:"humidity"`
 }
 
-func (t *ThyLabxxnsStruct) parse(payload []byte) {
+func (t *ThyLabxxnsStruct) Load(payload []byte) {
 	length := len(payload)
 	t.ID = uint8(payload[0])
 	// battery level expressed in 1/254 %

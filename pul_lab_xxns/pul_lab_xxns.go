@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/hkraft/hkraft-iot/lora-payload-parsers/binary_utils"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/binary_utils"
 )
 
 // Parse is the cloud function for converting the payload hex to json
 func Parse(payload []byte) (jsonData []byte, err error) {
 	if !(payload[0] == 02 || payload[0] == 07) {
-		return nil, fmt.Errorf("This parser only supports the Uplink message DATALOG - FPort 3 (HEX starts with 02 or 07)")
+		return nil, fmt.Errorf("this parser only supports the Uplink message DATALOG - FPort 3 (HEX starts with 02 or 07)")
 	}
 	var data PulLabxxnsStruct
-	data.parse(payload)
+	data.Load(payload)
 
 	return json.Marshal(data)
 }
@@ -27,7 +27,7 @@ type PulLabxxnsStruct struct {
 	Counter       uint32 `json:"counter"`
 }
 
-func (t *PulLabxxnsStruct) parse(payload []byte) {
+func (t *PulLabxxnsStruct) Load(payload []byte) {
 	length := len(payload)
 	t.ID = uint8(payload[0])
 	batteryLocation := 1

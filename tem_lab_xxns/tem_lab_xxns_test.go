@@ -8,7 +8,7 @@ import (
 func TestID(t *testing.T) {
 	var expected uint8 = 1
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x01, 0x00, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x01, 0x00, 0x00, 0x00, 0x00, 0x00})
 	actual := data.ID
 	if expected != actual {
 		t.Errorf(
@@ -22,7 +22,7 @@ func TestID(t *testing.T) {
 func TestBattery(t *testing.T) {
 	expected := math.Round(252.0 / 254.0 * 100) // 99%
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x00, 0xfc, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x00, 0xfc, 0x00, 0x00, 0x00, 0x00})
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -36,7 +36,7 @@ func TestBattery(t *testing.T) {
 func TestBatteryRounding(t *testing.T) {
 	expected := math.Round(253.0 / 254.0 * 100) // 100%
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x00, 0xfd, 0x00, 0x00, 0x00, 0x00})
+	data.Load([]byte{0x00, 0xfd, 0x00, 0x00, 0x00, 0x00})
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -50,7 +50,7 @@ func TestBatteryRounding(t *testing.T) {
 func TestInternalData(t *testing.T) {
 	expected := "01020304050607"
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x00})
+	data.Load([]byte{0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x00})
 	actual := data.InternalData
 	if actual != expected {
 		t.Errorf(
@@ -64,7 +64,7 @@ func TestInternalData(t *testing.T) {
 func TestTemperature(t *testing.T) {
 	var expected float32 = 32767 / 16.0
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x7f, 0xff})
+	data.Load([]byte{0x00, 0x00, 0x7f, 0xff})
 	actual := data.Temperature
 	if expected != actual {
 		t.Errorf(
@@ -78,7 +78,7 @@ func TestTemperature(t *testing.T) {
 func TestTemperatureVariableInternalData(t *testing.T) {
 	var expected float32 = -3841 / 16.0
 	var data TemLabxxnsStruct
-	data.parse([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff})
+	data.Load([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff})
 	actual := data.Temperature
 	if expected != actual {
 		t.Errorf(
