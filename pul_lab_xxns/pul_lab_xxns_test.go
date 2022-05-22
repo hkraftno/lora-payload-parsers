@@ -5,10 +5,19 @@ import (
 	"testing"
 )
 
+func TestErr(t *testing.T) {
+	var data PulLabxxnsStruct
+	err := data.Load("05")
+	if err == nil {
+		t.Errorf("Expected error to occur because hex string was too short")
+	}
+}
+
+
 func TestID(t *testing.T) {
 	var expected uint8 = 2
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x02, 0x00, 0x00, 0x00, 0x00, 0x00})
+	data.Load("020000000000")
 	actual := data.ID
 	if expected != actual {
 		t.Errorf(
@@ -22,7 +31,7 @@ func TestID(t *testing.T) {
 func TestBattery(t *testing.T) {
 	expected := math.Round(252.0 / 254.0 * 100) // 99%
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x00, 0xfc, 0x00, 0x00, 0x00, 0x00})
+	data.Load("02fc00000000")
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -35,7 +44,7 @@ func TestBattery(t *testing.T) {
 func TestBatteryWithWirecut(t *testing.T) {
 	expected := math.Round(252.0 / 254.0 * 100) // 99%
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x07, 0x80, 0xfc, 0x00, 0x00, 0x00, 0x00})
+	data.Load("0780fc00000000")
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -56,7 +65,7 @@ func TestBatteryWithWirecut(t *testing.T) {
 func TestBatteryRounding(t *testing.T) {
 	expected := math.Round(253.0 / 254.0 * 100) // 100%
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x00, 0xfd, 0x00, 0x00, 0x00, 0x00})
+	data.Load("02fd00000000")
 	actual := data.BatteryLevel
 	if uint8(expected) != actual {
 		t.Errorf(
@@ -70,7 +79,7 @@ func TestBatteryRounding(t *testing.T) {
 func TestWireCutEnabled(t *testing.T) {
 	var expected = true
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x07, 0x80, 0x00, 0x00, 0x00, 0x00})
+	data.Load("07800000000000")
 	actual := data.WireCutStatus
 	if expected != *actual {
 		t.Errorf(
@@ -83,7 +92,7 @@ func TestWireCutEnabled(t *testing.T) {
 
 func TestWireCutDisabled(t *testing.T) {
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x03, 0xfd, 0x00, 0x00, 0x00, 0x00})
+	data.Load("03fd00000000")
 	actual := data.WireCutStatus
 	if nil != actual {
 		t.Errorf(
@@ -96,7 +105,7 @@ func TestWireCutDisabled(t *testing.T) {
 func TestInternalData(t *testing.T) {
 	expected := "01020304050607"
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x00, 0x00, 0x00})
+	data.Load("02000102030405060700000000")
 	actual := data.InternalData
 	if actual != expected {
 		t.Errorf(
@@ -110,7 +119,7 @@ func TestInternalData(t *testing.T) {
 func TestCounter(t *testing.T) {
 	var expected uint32 = 2147483647
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x00, 0x00, 0x7f, 0xff, 0xff, 0xff})
+	data.Load("02007fffffff")
 	actual := data.Counter
 	if expected != actual {
 		t.Errorf(
@@ -124,7 +133,7 @@ func TestCounter(t *testing.T) {
 func TestCounterVariableInternalData(t *testing.T) {
 	var expected uint32 = 16843009
 	var data PulLabxxnsStruct
-	data.Load([]byte{0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01})
+	data.Load("0200000001010101")
 	actual := data.Counter
 	if expected != actual {
 		t.Errorf(
@@ -136,14 +145,14 @@ func TestCounterVariableInternalData(t *testing.T) {
 }
 
 func TestInvalidMessageFormat(t *testing.T) {
-	_, err := Parse([]byte{0x99})
+	_, err := Parse("99")
 	if err == nil {
 		t.Errorf("Expected error when parsing invalid message type, got nil")
 	}
 }
 
 func TestParserExampleHex1(t *testing.T) {
-	parsedPayload, err := Parse([]byte{0x02, 0xfc, 0x8e, 0x01, 0x9c, 0x10, 0x00, 0x1b, 0x1b, 0x00})
+	parsedPayload, err := Parse("02fc8e019c10001b1b00")
 	if err != nil {
 		t.Errorf("Did not expect error, got %v", err)
 	}

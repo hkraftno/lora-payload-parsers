@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/hex"
 	"fmt"
 	"log"
 	"net/http"
@@ -40,7 +39,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	parserName := urlParts[1]
 	payloadString := urlParts[2]
 
-	var parser func([]byte) ([]byte, error)
+	var parser func(string) ([]byte, error)
 	switch parserName {
 	case "pul_lab_xxns":
 		parser = pul_lab_xxns.Parse
@@ -59,12 +58,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hexBytes, err := hex.DecodeString(payloadString)
-	if err != nil {
-		http.Error(w, err.Error(), 400)
-		return
-	}
-	jsonString, err := parser(hexBytes)
+	jsonString, err := parser(payloadString)
 	if err != nil {
 		message := fmt.Sprintf("Got error parsing they payload %s: %s", payloadString, err.Error())
 		http.Error(w, message, 400)
