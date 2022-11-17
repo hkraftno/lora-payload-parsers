@@ -13,6 +13,7 @@ import (
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tem_lab_xxns"
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/thy_lab_xxns"
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tor_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tx_contact_600_039"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	urlParts := strings.Split(r.URL.String(), "/")
 	if r.Method != "GET" {
-		http.Error(w, "Only GET is supported", 405)
+		http.Error(w, "Only GET is supported", http.StatusMethodNotAllowed)
 		return
 	} else if len(urlParts) != 3 || urlParts[2] == "" {
 		http.Error(w, "Expected HEX to come after /", 400)
@@ -53,8 +54,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		parser = tor_lab_xxns.Parse
 	case "ope_lab_xxns":
 		parser = ope_lab_xxns.Parse
+	case "tx_contact_600_039":
+		parser = tx_contact_600_039.Parse
 	default:
-		http.Error(w, "Unknown parser "+parserName, 404)
+		http.Error(w, "Unknown parser "+parserName, http.StatusNotFound)
 		return
 	}
 
