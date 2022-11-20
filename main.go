@@ -13,6 +13,7 @@ import (
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tem_lab_xxns"
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/thy_lab_xxns"
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tor_lab_xxns"
+	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tx_contact_600_032"
 	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/tx_contact_600_039"
 )
 
@@ -54,6 +55,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		parser = tor_lab_xxns.Parse
 	case "ope_lab_xxns":
 		parser = ope_lab_xxns.Parse
+	case "tx_contact_600_032":
+		parser = tx_contact_600_032.Parse
 	case "tx_contact_600_039":
 		parser = tx_contact_600_039.Parse
 	default:
