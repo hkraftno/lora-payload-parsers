@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/binary_utils"
+	"github.com/hkraftno/lora-payload-parsers/binary_utils"
 )
 
 // Parse is the cloud function for converting the payload hex to json
@@ -25,8 +25,8 @@ type Tx_Contact_600_032 struct {
 	SequentialCounter uint8       `json:"sequential_counter"`
 	FirmWare          uint8       `json:"firm_ware"`
 	Settings          uint8       `json:"settings"`
-	Temperature       float32       `json:"temperature"`
-	Temperature2      float32       `json:"temperature2"`
+	Temperature       float32     `json:"temperature"`
+	Temperature2      float32     `json:"temperature2"`
 	AlarmStatus       AlarmStatus `json:"alarm_status"`
 	Status            Status      `json:"status"`
 }
@@ -48,8 +48,8 @@ func (t *Tx_Contact_600_032) Load(hexString string) error {
 	t.SequentialCounter = hexBytes[4]
 	t.FirmWare = hexBytes[5] & 0x03 // first 3 bits are firmware
 	t.Settings = hexBytes[5] >> 3   // the rest of the byte is settings
-	t.Temperature = float32((uint16(hexBytes[6]) << 8) | uint16(hexBytes[7])) / 10.0
-	t.Temperature2 = float32((uint16(hexBytes[8]) << 8) | uint16(hexBytes[9])) / 10.0
+	t.Temperature = float32((uint16(hexBytes[6])<<8)|uint16(hexBytes[7])) / 10.0
+	t.Temperature2 = float32((uint16(hexBytes[8])<<8)|uint16(hexBytes[9])) / 10.0
 	t.AlarmStatus = toAlarmStatus(hexBytes[10:12])
 	t.Status = toStatus(hexBytes[12:14])
 	return nil

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/hkraftno/hkraft-iot/lora-payload-parsers/binary_utils"
+	"github.com/hkraftno/lora-payload-parsers/binary_utils"
 )
 
 // Parse is the cloud function for converting the payload hex to json
