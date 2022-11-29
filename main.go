@@ -13,8 +13,8 @@ import (
 	"github.com/hkraftno/lora-payload-parsers/tem_lab_xxns"
 	"github.com/hkraftno/lora-payload-parsers/thy_lab_xxns"
 	"github.com/hkraftno/lora-payload-parsers/tor_lab_xxns"
-	"github.com/hkraftno/lora-payload-parsers/tx_contact_600_032"
 	"github.com/hkraftno/lora-payload-parsers/tx_contact_600_039"
+	"github.com/hkraftno/lora-payload-parsers/tx_temp_cont1_600_032"
 )
 
 func main() {
@@ -55,8 +55,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		parser = tor_lab_xxns.Parse
 	case "ope_lab_xxns":
 		parser = ope_lab_xxns.Parse
-	case "tx_contact_600_032":
-		parser = tx_contact_600_032.Parse
+	case "tx_temp_cont1_600_032":
+		parser = tx_temp_cont1_600_032.Parse
 	case "tx_contact_600_039":
 		parser = tx_contact_600_039.Parse
 	default:

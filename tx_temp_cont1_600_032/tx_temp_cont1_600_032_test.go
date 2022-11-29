@@ -1,11 +1,11 @@
-package tx_contact_600_032
+package tx_temp_cont1_600_032
 
 import (
 	"testing"
 )
 
 func TestErr(t *testing.T) {
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	err := data.Load("05")
 	if err == nil {
 		t.Errorf("Expected error to occur because hex string was too short")
@@ -14,7 +14,7 @@ func TestErr(t *testing.T) {
 
 func TestID(t *testing.T) {
 	var expected uint32 = 220
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000000")
 	actual := data.ID
 	if expected != actual {
@@ -28,7 +28,7 @@ func TestID(t *testing.T) {
 
 func TestSensorType(t *testing.T) {
 	expected := 15 // Tx Temp Cont1
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000000")
 	actual := data.SensorType
 	if uint8(expected) != actual {
@@ -42,7 +42,7 @@ func TestSensorType(t *testing.T) {
 
 func TestSequentialCounter(t *testing.T) {
 	expected := 10
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000000")
 	actual := data.SequentialCounter
 	if uint8(expected) != actual {
@@ -56,7 +56,7 @@ func TestSequentialCounter(t *testing.T) {
 
 func TestFirmWare(t *testing.T) {
 	var expected uint8 = 1
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000000")
 	actual := data.FirmWare
 	if actual != expected {
@@ -70,7 +70,7 @@ func TestFirmWare(t *testing.T) {
 
 func TestSettings(t *testing.T) {
 	var expected uint8 = 1
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0900D0000000000000")
 	actual := data.Settings
 	if actual != expected {
@@ -84,7 +84,7 @@ func TestSettings(t *testing.T) {
 
 func TestTemperature(t *testing.T) {
 	var expected float32 = 20.8
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000000")
 	actual := data.Temperature
 	if expected != actual {
@@ -98,7 +98,7 @@ func TestTemperature(t *testing.T) {
 
 func TestTemperature2(t *testing.T) {
 	var expected float32 = 14.4
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0009000000000")
 	actual := data.Temperature2
 	if expected != actual {
@@ -111,7 +111,7 @@ func TestTemperature2(t *testing.T) {
 }
 
 func TestAlarmStatus(t *testing.T) {
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000020000")
 	tests := []struct {
 		variableName string
@@ -129,7 +129,7 @@ func TestAlarmStatus(t *testing.T) {
 }
 
 func TestStatus(t *testing.T) {
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	data.Load("0000DC0F0A0100D0000000000001")
 	tests := []struct {
 		variableName string
@@ -146,17 +146,17 @@ func TestStatus(t *testing.T) {
 }
 
 func TestStatusBatteryPercentage(t *testing.T) {
-	var data Tx_Contact_600_032
+	var data Tx_Temp_Cont1_600_032
 	tests := []struct {
 		hex          string
 		variableName string
-		variable     func(Tx_Contact_600_032) uint8
+		variable     func(Tx_Temp_Cont1_600_032) uint8
 		expected     uint8
 	}{
-		{"0000DC0F0A0100D0000000000021", "status.BatteryPercentage", func(data Tx_Contact_600_032) uint8 { return data.Status.BatteryPercentage }, 100},
-		{"0000DC0F0A0100D0000000000025", "status.BatteryPercentage", func(data Tx_Contact_600_032) uint8 { return data.Status.BatteryPercentage }, 75},
-		{"0000DC0F0A0100D0000000000029", "status.BatteryPercentage", func(data Tx_Contact_600_032) uint8 { return data.Status.BatteryPercentage }, 50},
-		{"0000DC0F0A0100D000000000002D", "status.BatteryPercentage", func(data Tx_Contact_600_032) uint8 { return data.Status.BatteryPercentage }, 25},
+		{"0000DC0F0A0100D0000000000021", "status.BatteryPercentage", func(data Tx_Temp_Cont1_600_032) uint8 { return data.Status.BatteryPercentage }, 100},
+		{"0000DC0F0A0100D0000000000025", "status.BatteryPercentage", func(data Tx_Temp_Cont1_600_032) uint8 { return data.Status.BatteryPercentage }, 75},
+		{"0000DC0F0A0100D0000000000029", "status.BatteryPercentage", func(data Tx_Temp_Cont1_600_032) uint8 { return data.Status.BatteryPercentage }, 50},
+		{"0000DC0F0A0100D000000000002D", "status.BatteryPercentage", func(data Tx_Temp_Cont1_600_032) uint8 { return data.Status.BatteryPercentage }, 25},
 	}
 	for _, testData := range tests {
 		data.Load(testData.hex)

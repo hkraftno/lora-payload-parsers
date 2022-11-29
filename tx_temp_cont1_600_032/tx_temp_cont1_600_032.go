@@ -1,4 +1,4 @@
-package tx_contact_600_032
+package tx_temp_cont1_600_032
 
 import (
 	"encoding/hex"
@@ -10,7 +10,7 @@ import (
 
 // Parse is the cloud function for converting the payload hex to json
 func Parse(hexString string) (jsonData []byte, err error) {
-	var instance Tx_Contact_600_032
+	var instance Tx_Temp_Cont1_600_032
 	err = instance.Load(hexString)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func Parse(hexString string) (jsonData []byte, err error) {
 	return json.Marshal(instance)
 }
 
-type Tx_Contact_600_032 struct {
+type Tx_Temp_Cont1_600_032 struct {
 	ID                uint32      `json:"id"`
 	SensorType        uint8       `json:"sensor_type"`
 	SequentialCounter uint8       `json:"sequential_counter"`
@@ -31,7 +31,7 @@ type Tx_Contact_600_032 struct {
 	Status            Status      `json:"status"`
 }
 
-func (t *Tx_Contact_600_032) Load(hexString string) error {
+func (t *Tx_Temp_Cont1_600_032) Load(hexString string) error {
 	var sensorType uint8 = 15
 	hexBytes, err := hex.DecodeString(hexString)
 	if err != nil {
