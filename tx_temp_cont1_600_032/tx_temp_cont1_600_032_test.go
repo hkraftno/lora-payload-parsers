@@ -96,6 +96,20 @@ func TestTemperature(t *testing.T) {
 	}
 }
 
+func TestNegativeTemperature(t *testing.T) {
+	var expected float32 = -0.1
+	var data Tx_Temp_Cont1_600_032
+	data.Load("0050520f6c09ffff000000000000")
+	actual := data.Temperature
+	if expected != actual {
+		t.Errorf(
+			"Expected Temperature to be %.1f but was %.1f",
+			expected,
+			actual,
+		)
+	}
+}
+
 func TestTemperature2(t *testing.T) {
 	var expected float32 = 14.4
 	var data Tx_Temp_Cont1_600_032

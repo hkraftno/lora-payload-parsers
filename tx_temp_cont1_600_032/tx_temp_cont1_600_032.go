@@ -48,8 +48,10 @@ func (t *Tx_Temp_Cont1_600_032) Load(hexString string) error {
 	t.SequentialCounter = hexBytes[4]
 	t.FirmWare = hexBytes[5] & 0x03 // first 3 bits are firmware
 	t.Settings = hexBytes[5] >> 3   // the rest of the byte is settings
-	t.Temperature = float32((uint16(hexBytes[6])<<8)|uint16(hexBytes[7])) / 10.0
-	t.Temperature2 = float32((uint16(hexBytes[8])<<8)|uint16(hexBytes[9])) / 10.0
+	temp1Int := int16(hexBytes[6])<<8|int16(hexBytes[7])
+	temp2Int := int16(hexBytes[8])<<8|int16(hexBytes[9])
+	t.Temperature = float32(temp1Int) / 10.0
+	t.Temperature2 = float32(temp2Int) / 10.0
 	t.AlarmStatus = toAlarmStatus(hexBytes[10:12])
 	t.Status = toStatus(hexBytes[12:14])
 	return nil
